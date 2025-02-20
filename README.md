@@ -7,15 +7,16 @@ This repository contains a configurable lexical analyzer (lexer) implemented in 
 A lexical analyzer converts a sequence of characters into tokens, where each token is defined by a regular expression and paired with its matching lexeme (e.g., `t1, "a"`). Unlike a fixed lexer, this configurable version allows users to specify token definitions, enhancing flexibility without modifying the core code.
 
 ### Example
-**Input:**
-t1 a|b, t2 a*, t3 (a|b)*, c  # 
-"a aa bbc aad aa"
-**Output:**
-t1, "a",
-t2, "aa",
-t3, "bbc",
-t2, "aa"
-ERROR
+**Input:**  
+t1 a|b, t2 a*, t3 (a|b)*, c  #   
+"a aa bbc aad aa"  
+
+**Output:**  
+t1, "a",  
+t2, "aa",  
+t3, "bbc",  
+t2, "aa"  
+ERROR  
 
 ## Requirements
 
@@ -44,20 +45,73 @@ This modular approach ensured a working system at each step, progressively enhan
     ```bash
     g++ -std=c++17 $(find Lexical-Analyzer -name "*.cpp")
 
-4. **Run**:
-    Use a text file (e.g., test_1.txt) with token definitions and input string:
+4. **Run**:  
+   Use a text file (e.g., test_1.txt) with token definitions and input string:
      ```bash
       t1 a|b, t2 a*.a, t3 (a|b)*.c*.c  #
       "a aac bbc aabc"
-   
+      ```
     Execute:
-        ```bash
+      ```bash
        ./a.out < test_1.txt > output.txt
-
+      ```
     Expected output:
+      ```bash
         t1, "a"
         t3, "aac"
         t3, "bbc"
         t3, "aabc"
+      ```
    
 
+
+## Testing
+The program was tested in a Unix environment with sample cases:  
+
+## Test Case 1
+
+Input:  
+```bash
+t1 a|b, t2 a*.a, t3 (a|b)*.c*.c  #
+"a aac bbc aabc"
+```
+
+Output:  
+```bash
+t1, "a"
+t3, "aac"
+t3, "bbc"
+t3, "aabc"
+```
+
+## Test Case 2
+
+Input:  
+```bash
+t1 a|b, t2 a, a+, t3 (a|b)*.(c|d)#
+"aaabbcaaaa"
+```
+Output:  
+```bash
+t3, "aaabbc"
+t2, "aaaa"
+```
+## Test Case 3
+
+Input:  
+```bash
+t1 a|b, t2 a*, a, t3 a*, t4 b, t5 (a|b)*#
+"a aac bbc aabc"
+```
+
+Output:  
+```bash
+EPSILON IS NOT A TOKEN t3 t5
+```
+
+## Notes
+Handles edge cases like epsilon-generating regexes by reporting **EPSILON IS NOT A TOKEN**.  
+Designed for readability and modularity, reflecting best practices in compiler design.  
+## Author
+**Tariq Alharbi** (GitHub: tariq4014)  
+**Completed**: February 2025
