@@ -41,14 +41,17 @@ This modular approach ensured a working system at each step, progressively enhan
    git clone https://github.com/tariq4014/Lexical-Analyzer.git
 
 2. **Compile**:
+    ```bash
     g++ -std=c++17 $(find Lexical-Analyzer -name "*.cpp")
 
-3. **Run**:
+4. **Run**:
     Use a text file (e.g., test_1.txt) with token definitions and input string:
+     ```bash
       t1 a|b, t2 a*.a, t3 (a|b)*.c*.c  #
       "a aac bbc aabc"
    
     Execute:
+        ```bash
        ./a.out < test_1.txt > output.txt
 
     Expected output:
